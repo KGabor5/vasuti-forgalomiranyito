@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vasúti forgalomirányító szimulátor">
+    <title>Vasúti Forgalomirányító Szimulátor</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <main class="app">
+
+        <!-- KEZDŐKÉPERNYŐ -->
+        <section class="screen start-screen" data-screen="menu">
+
+            <header class="main-header">
+                <h1>🚂 Vasúti Forgalomirányító</h1>
+                <p>Legyél te a Nagy Csomóponti Pályaudvar diszpécsere!</p>
+            </header>
+
+            <div class="menu-container">
+
+                <div class="menu-card">
+                    <h2>Új játék indítása</h2>
+                    <p>Add meg a neved, válaszd ki a pályát, és kezdődhet a forgalomirányítás!</p>
+
+                    <div class="form-group">
+                        <label for="player-name">Játékos neve:</label>
+                        <input
+                            type="text"
+                            id="player-name"
+                            placeholder="Írd be a neved..."
+                            maxlength="20"
+                            autocomplete="off"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="difficulty">Nehézségi szint:</label>
+                        <select id="difficulty">
+                            <option value="1">1. szint: Kitérő vágány jelzőkkel (Könnyű)</option>
+                            <option value="2">2. szint: Rendező-pályaudvar (Közepes)</option>
+                            <option value="3">3. szint: Fejpályaudvari csúcsforgalom (Nehéz)</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary" type="button" data-action="start">
+                        ▶ Szimuláció indítása
+                    </button>
+
+                    <button class="btn btn-secondary" type="button" data-action="load-menu">
+                        📂 Mentett játék betöltése
+                    </button>
+
+                    <p class="menu-message" data-role="menu-message" aria-live="polite"></p>
+                </div>
+
+                <div class="menu-card info-card">
+                    <h2>📖 Játékszabályzat</h2>
+
+                    <details>
+                        <summary>Mi a játék célja?</summary>
+                        <p>
+                            Irányítsd a különböző színű vonatokat a megfelelő
+                            célállomásokra! Figyelj a váltókra, a fényjelzőkre
+                            és a többi szerelvényre!
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>🎮 Irányítás</summary>
+                        <ul>
+                            <li>Bal kattintás a váltóra: váltóállítás.</li>
+                            <li>Bal kattintás a jelzőre: piros és zöld állapot váltása.</li>
+                            <li>Jobb kattintás a vonatra: vészfékezés.</li>
+                            <li>Ismételt jobb kattintás: fék feloldása.</li>
+                        </ul>
+                    </details>
+
+                    <details>
+                        <summary>⚠️ Biztonsági szabályok</summary>
+                        <ul>
+                            <li>Ne engedj két vonatot egymásnak ütközni!</li>
+                            <li>Figyelj a váltók megfelelő állására!</li>
+                            <li>A piros jelzőnél a vonatnak meg kell állnia.</li>
+                            <li>Minden vonatot a saját célállomására kell vezetni.</li>
+                        </ul>
+                    </details>
+                </div>
+
+                <div class="menu-card leaderboard-card">
+                    <h2>🏆 Diszpécserek dicsőségkönyve</h2>
+
+                    <div class="form-group">
+                        <label for="leaderboard-level">Pálya kiválasztása:</label>
+                        <select id="leaderboard-level">
+                            <option value="1">1. szint - Könnyű</option>
+                            <option value="2">2. szint - Közepes</option>
+                            <option value="3">3. szint - Nehéz</option>
+                        </select>
+                    </div>
+
+                    <div class="leaderboard-content" data-role="leaderboard">
+                        <p>Még nincsenek elmentett eredmények.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- JÁTÉKKÉPERNYŐ -->
+        <section class="screen game-screen" data-screen="game" hidden>         
+            <header class="game-topbar">
+
+                <div class="game-title">
+                    <h2>🚂 Vasúti Forgalomirányító</h2>
+                    <p data-role="player-display">Játékos: -</p>
+                </div>
+
+                <button
+                    class="mobile-menu-toggle btn btn-secondary"
+                    type="button"
+                    data-action="toggle-mobile-menu"
+                    aria-label="Menü megnyitása"
+                    aria-expanded="false"
+                    aria-controls="mobile-game-menu"
+                >
+                    ☰
+                </button>
+
+                <div class="mobile-menu-panel" id="mobile-game-menu">
+
+                    <div class="game-stats">
+                        <div class="stat-box">
+                            <span>Pálya</span>
+                            <strong data-role="level-display">1. szint</strong>
+                        </div>
+
+                        <div class="stat-box">
+                            <span>Idő</span>
+                            <strong data-role="timer">00:00</strong>
+                        </div>
+
+                        <div class="stat-box">
+                            <span>Célba ért</span>
+                            <strong data-role="arrived">0 / 4</strong>
+                        </div>
+
+                        <div class="stat-box">
+                            <span>Hiba / Késés</span>
+                            <strong data-role="errors">0</strong>
+                        </div>
+                    </div>
+
+                    <nav class="game-controls" aria-label="Játékvezérlők">
+
+                        <button class="btn btn-primary" type="button" data-action="pause">
+                            ⏸
+                        </button>
+
+                        <button class="btn btn-danger" type="button" data-action="restart">
+                            🔄
+                        </button>
+
+                        <button class="btn btn-primary" type="button" data-action="save">
+                            💾
+                        </button>
+
+                        <button class="btn btn-secondary" type="button" data-action="info">
+                            ℹ️
+                        </button>
+
+                        <button class="btn btn-secondary" type="button" data-action="back-menu">
+                            🏠
+                        </button>
+
+                    </nav>
+
+                </div>
+
+            </header>
+
+
+            <div class="game-area">
+                <canvas
+                    id="game-canvas"
+                    width="1200"
+                    height="650"
+                    aria-label="Vasúti pályahálózat és a vonatok irányítása"
+                >
+                    A böngésződ nem támogatja a HTML5 Canvas használatát.
+                </canvas>
+            </div>
+
+            <!-- SÚGÓ ÉS ESEMÉNYNAPLÓ ABLAK -->
+            <section
+                class="modal-overlay info-modal"
+                data-role="info-modal"
+                hidden
+                aria-labelledby="info-modal-title"
+                aria-modal="true"
+                role="dialog"
+            >
+                <div class="modal-card info-modal-card">
+
+                    <button
+                        class="info-close"
+                        type="button"
+                        data-action="close-info"
+                        aria-label="Ablak bezárása"
+                    >✕</button>
+
+                    <h2 id="info-modal-title">ℹ️ Súgó és forgalmi események</h2>
+
+                    <div class="info-modal-content">
+
+                        <div class="event-log">
+                            <h3>📢 Forgalmi események</h3>
+                            <div data-role="event-log" aria-live="polite">
+                                <p>A szimuláció még nem indult el.</p>
+                            </div>
+                        </div>
+
+                        <div class="game-help">
+                            <h3>🎮 Irányítás és szabályok</h3>
+
+                            <p>
+                                <strong>Bal kattintás a váltóra:</strong>
+                                váltóállítás.
+                            </p>
+
+                            <p>
+                                <strong>Bal kattintás a jelzőre:</strong>
+                                piros és zöld állapot váltása.
+                            </p>
+
+                            <p>
+                                <strong>Jobb kattintás a vonatra:</strong>
+                                vészfékezés, ismételt jobb kattintásra a fék feloldása.
+                            </p>
+
+                            <p>
+                                <strong>Biztonság:</strong>
+                                a piros jelzőnél a vonatoknak meg kell állniuk.
+                                Ügyelj a megfelelő váltóállásra, a biztonságos
+                                követési távolságra és a megfelelő célperonra!
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <button class="btn btn-primary" type="button" data-action="close-info">
+                        Bezárás
+                    </button>
+
+                </div>
+            </section>
+
+            <!-- SZÜNET ABLAK -->
+            <section
+                class="modal-overlay pause-modal"
+                data-role="pause-modal"
+                hidden
+                aria-labelledby="pause-modal-title"
+                aria-modal="true"
+                role="dialog"
+            >
+                <div class="modal-card pause-modal-card">
+
+                    <div class="modal-icon">⏸️</div>
+
+                    <h2 id="pause-modal-title">A játék szünetel</h2>
+
+                    <p>
+                        A vasúti forgalomirányítás jelenleg szünetel.
+                        A vonatok mozgása megállt.
+                    </p>
+
+                    <button
+                        class="btn btn-primary"
+                        type="button"
+                        data-action="pause"
+                    >
+                        ▶ Folytatás
+                    </button>
+
+                </div>
+            </section>
+
+        </section>
+
+
+        <!-- JÁTÉK VÉGI MODÁLIS ABLAK -->
+        <section
+            class="modal-overlay"
+            data-role="result-modal"
+            hidden
+            aria-labelledby="result-title"
+            aria-modal="true"
+            role="dialog"
+        >
+
+            <div class="modal-card">
+
+                <div class="modal-icon" data-role="result-icon">🏆</div>
+
+                <h2 id="result-title" data-role="result-title">
+                    Játék vége!
+                </h2>
+
+                <p data-role="result-message"></p>
+
+                <div class="result-stats" data-role="result-stats"></div>
+
+                <button class="btn btn-primary" type="button" data-action="play-again">
+                    🔄 Új játék
+                </button>
+
+                <button class="btn btn-secondary" type="button" data-action="result-menu">
+                    🏠 Vissza a főmenübe
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script type="module" src="./js/app.js"></script>
+
+</body>
+</html>

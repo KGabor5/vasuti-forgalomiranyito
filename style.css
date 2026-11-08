@@ -1,0 +1,917 @@
+
+/* ========================================
+   ALAPBEÁLLÍTÁSOK
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: #080d1c;
+    --panel: #111a30;
+    --panel-light: #1c2942;
+    --border: #303e5a;
+    --primary: #4268e8;
+    --primary-hover: #587cf5;
+    --danger: #ce3737;
+    --danger-hover: #e34b4b;
+    --success: #32b875;
+    --text: #edf2ff;
+    --text-muted: #aab6d0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+summary:focus-visible {
+    outline: 2px solid #78aaff;
+    outline-offset: 3px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* ========================================
+   ALKALMAZÁS
+======================================== */
+
+.app {
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+/* ========================================
+   KEZDŐKÉPERNYŐ
+======================================== */
+
+.start-screen {
+    min-height: 100vh;
+    padding: 35px 20px;
+    background:
+        radial-gradient(circle at top, #1c2e53 0%, transparent 50%),
+        var(--background);
+}
+
+.main-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.main-header h1 {
+    font-size: 34px;
+    color: #80b9ff;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+
+.main-header p {
+    color: var(--text-muted);
+    font-size: 16px;
+}
+
+.menu-container {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.menu-card {
+    min-width: 0;
+    padding: 25px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.menu-card h2 {
+    font-size: 21px;
+    color: #83baff;
+    margin-bottom: 15px;
+}
+
+.menu-card > p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+
+/* ========================================
+   ŰRLAPOK
+======================================== */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #dce7ff;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    color: var(--text);
+    background: #080f20;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+.form-group input::placeholder {
+    color: #7886a2;
+}
+
+.form-group select option {
+    background: #111a30;
+    color: var(--text);
+}
+
+
+/* ========================================
+   GOMBOK
+======================================== */
+
+.btn {
+    min-height: 44px;
+    padding: 11px 18px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    font-weight: bold;
+    color: white;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background: var(--primary);
+    border-color: #6282f2;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 4px 12px rgba(66, 104, 232, 0.25);
+}
+
+.btn-secondary {
+    background: #53617a;
+    border-color: #6a7891;
+}
+
+.btn-secondary:hover {
+    background: #687a98;
+}
+
+.btn-danger {
+    background: var(--danger);
+    border-color: #ef5555;
+}
+
+.btn-danger:hover {
+    background: var(--danger-hover);
+}
+
+.menu-card > .btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.menu-message {
+    min-height: 20px;
+    margin-top: 12px;
+    color: #ff9999;
+    font-size: 13px;
+}
+
+
+/* ========================================
+   JÁTÉKSZABÁLYZAT
+======================================== */
+
+.info-card details {
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.info-card details:last-child {
+    border-bottom: none;
+}
+
+.info-card summary {
+    cursor: pointer;
+    color: #e2eaff;
+    font-weight: bold;
+}
+
+.info-card details p,
+.info-card details ul {
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 12px;
+    padding-left: 18px;
+}
+
+.info-card details p {
+    padding-left: 0;
+}
+
+
+/* ========================================
+   RANGLISTA
+======================================== */
+
+.leaderboard-card {
+    grid-column: 1 / -1;
+    min-width: 0;
+}
+
+.leaderboard-content {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: 440px;
+    padding: 12px;
+    background: #0b1223;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #526789 #0b1223;
+}
+
+.leaderboard-content p {
+    margin: 0;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.leaderboard-content ol {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style-position: inside;
+}
+
+.leaderboard-content li {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    margin: 0 0 7px;
+    padding: 11px 12px;
+    color: var(--text);
+    background: #151f35;
+    border: 1px solid #293b5b;
+    border-radius: 7px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.leaderboard-content li:hover {
+    background: #1c2a45;
+}
+
+.leaderboard-content li:nth-child(1) {
+    background: linear-gradient(100deg, #59451b, #302817);
+    border-color: #d6aa3d;
+}
+
+.leaderboard-content li:nth-child(2) {
+    background: linear-gradient(100deg, #414c5a, #252d38);
+    border-color: #aeb9c8;
+}
+
+.leaderboard-content li:nth-child(3) {
+    background: linear-gradient(100deg, #60402d, #34251e);
+    border-color: #bd8055;
+}
+
+.leaderboard-content li::marker {
+    color: #80b9ff;
+    font-weight: bold;
+}
+
+.leaderboard-content li:nth-child(1)::marker {
+    color: #ffd45c;
+}
+
+.leaderboard-content li:nth-child(2)::marker {
+    color: #d8e0eb;
+}
+
+.leaderboard-content li:nth-child(3)::marker {
+    color: #e5a276;
+}
+
+
+/* ========================================
+   JÁTÉKKÉPERNYŐ
+======================================== */
+
+.game-screen {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--background);
+}
+
+
+/* ========================================
+   FELSŐ INFORMÁCIÓS SÁV
+======================================== */
+
+.game-topbar {
+    flex: 0 0 auto;
+    min-height: 82px;
+    padding: 9px 14px;
+    background: #111827;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.game-title {
+    min-width: 150px;
+}
+
+.game-title h2 {
+    color: #80b9ff;
+    font-size: 17px;
+    margin-bottom: 4px;
+}
+
+.game-title p {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+.game-stats {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 7px;
+}
+
+.stat-box {
+    min-width: 75px;
+    padding: 7px 9px;
+    background: #202a3e;
+    border: 1px solid #3b4962;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-box span {
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+.stat-box strong {
+    font-size: 12px;
+    color: white;
+}
+
+
+/* ========================================
+   JÁTÉKVEZÉRLŐ GOMBOK
+======================================== */
+
+.game-controls {
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: 7px;
+}
+
+.game-controls .btn {
+    min-height: 38px;
+    padding: 8px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+
+/* ========================================
+   CANVAS JÁTÉKTÉR
+======================================== */
+
+.game-area {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#game-canvas {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 1200 / 650;
+    object-fit: contain;
+    flex: 0 1 auto;
+    background: #090c15;
+    border: 1px solid #30394d;
+    border-radius: 8px;
+    cursor: crosshair;
+    touch-action: manipulation;
+}
+
+
+/* ========================================
+   ESEMÉNYNAPLÓ ÉS JÁTÉKSEGÍTSÉG
+======================================== */
+
+.event-log {
+    margin-bottom: 12px;
+}
+
+.event-log h3 {
+    font-size: 14px;
+    color: #80b9ff;
+    margin-bottom: 7px;
+}
+
+.event-log p {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.game-help {
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+}
+
+.game-help p {
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.game-help strong {
+    color: #e0eaff;
+}
+
+
+/* ========================================
+   MODÁLIS ABLAKOK
+======================================== */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(4px);
+}
+
+.modal-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 30px;
+    background: var(--panel);
+    border: 1px solid #455779;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+    animation: modal-appear 0.25s ease;
+}
+
+.modal-icon {
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+.modal-card h2 {
+    color: #83baff;
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.modal-card > p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.result-stats {
+    margin: 15px 0 20px;
+    color: var(--text);
+    line-height: 1.8;
+}
+
+.modal-card .btn {
+    width: 100%;
+    margin-top: 9px;
+}
+
+@keyframes modal-appear {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* ========================================
+   SÚGÓ ÉS ESEMÉNYNAPLÓ MODÁLIS ABLAK
+======================================== */
+
+.info-modal {
+    z-index: 110;
+}
+
+.info-modal-card {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    max-height: 85vh;
+    max-height: 85dvh;
+    overflow-y: auto;
+    text-align: left;
+    padding: 28px;
+}
+
+.info-modal-card h2 {
+    padding-right: 30px;
+    font-size: 21px;
+}
+
+.info-modal-content {
+    margin: 18px 0;
+}
+
+.info-modal-content .event-log {
+    margin-bottom: 20px;
+    padding: 14px;
+    background: #0b1223;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.info-modal-content .event-log p {
+    overflow-wrap: anywhere;
+}
+
+.info-modal-content .game-help {
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
+}
+
+.info-modal-content .game-help h3 {
+    color: #80b9ff;
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.info-modal-content .game-help p {
+    margin: 9px 0;
+}
+
+.info-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 34px;
+    height: 34px;
+    color: white;
+    background: #303e5a;
+    border: 1px solid #53617a;
+    border-radius: 6px;
+    font-size: 17px;
+}
+
+
+/* ========================================
+   SZÜNET ABLAK
+======================================== */
+
+.pause-modal {
+    z-index: 120;
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(7px);
+}
+
+.pause-modal-card {
+    max-width: 440px;
+    padding: 35px;
+    border-color: #587cf5;
+    box-shadow: 0 0 35px rgba(66, 104, 232, 0.2);
+}
+
+.pause-modal-card .modal-icon {
+    font-size: 58px;
+}
+
+.pause-modal-card h2 {
+    margin-bottom: 15px;
+}
+
+.pause-modal-card > p {
+    margin-bottom: 22px;
+}
+
+
+/* ========================================
+   JÁTÉK KÖZBENI OLDALGÖRGETÉS TILTÁSA
+======================================== */
+
+body:has(.game-screen:not([hidden])) {
+    overflow: hidden;
+}
+
+
+/* ========================================
+   RESZPONZÍV MEGJELENÉS
+======================================== */
+
+@media (max-width: 1050px) {
+    .game-topbar {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .game-title {
+        min-width: 130px;
+    }
+
+    .game-stats {
+        flex: 1;
+        justify-content: flex-end;
+    }
+
+    .game-controls {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .game-controls .btn {
+        flex: 1;
+    }
+
+    .game-area {
+        min-height: 0;
+    }
+}
+
+@media (max-width: 650px) {
+    .start-screen {
+        padding: 25px 12px;
+    }
+
+    .main-header h1 {
+        font-size: 26px;
+    }
+
+    .main-header p {
+        font-size: 13px;
+    }
+
+    .menu-container {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-card {
+        padding: 18px;
+    }
+
+    .leaderboard-card {
+        grid-column: auto;
+    }
+
+    .game-topbar {
+        padding: 7px;
+    }
+
+    .game-title {
+        width: 100%;
+    }
+
+    .game-title h2 {
+        font-size: 15px;
+    }
+
+    .game-stats {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 4px;
+    }
+
+    .stat-box {
+        min-width: 0;
+        padding: 5px;
+    }
+
+    .stat-box strong {
+        font-size: 11px;
+    }
+
+    .game-controls {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 5px;
+    }
+
+    .game-controls .btn {
+        min-width: 0;
+        padding: 7px 4px;
+        font-size: 10px;
+    }
+
+    .game-area {
+        padding: 3px;
+    }
+
+    .info-modal-card {
+        padding: 20px;
+    }
+}
+
+
+
+/* ========================================
+   MOBILOS LENYÍTHATÓ JÁTÉKMENÜ
+======================================== */
+
+.mobile-menu-toggle {
+    display: none;
+}
+
+.mobile-menu-panel {
+    display: contents;
+}
+
+
+@media (max-width: 650px) {
+
+    .game-topbar {
+        position: relative;
+        z-index: 20;
+        flex-wrap: nowrap;
+        min-height: 58px;
+        padding: 8px 10px;
+        gap: 8px;
+    }
+
+    .game-title {
+        width: auto;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .game-title h2 {
+        font-size: 14px;
+        margin-bottom: 3px;
+    }
+
+    .game-title p {
+        font-size: 10px;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+        flex: 0 0 44px;
+        width: 44px;
+        min-height: 40px;
+        padding: 5px;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }
+
+    .mobile-menu-panel {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 30;
+
+        padding: 10px;
+        background: #111827;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .game-topbar.mobile-menu-open .mobile-menu-panel {
+        display: flex;
+    }
+
+    .mobile-menu-panel .game-stats {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 4px;
+    }
+
+    .mobile-menu-panel .stat-box {
+        min-width: 0;
+        padding: 6px 4px;
+    }
+
+    .mobile-menu-panel .stat-box span {
+        font-size: 9px;
+    }
+
+    .mobile-menu-panel .stat-box strong {
+        font-size: 11px;
+    }
+
+    .mobile-menu-panel .game-controls {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 5px;
+    }
+
+    .mobile-menu-panel .game-controls .btn {
+        min-width: 0;
+        min-height: 38px;
+        padding: 7px 4px;
+        font-size: 12px;
+    }
+
+}
